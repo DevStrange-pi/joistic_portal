@@ -1,7 +1,9 @@
 # joistic_portal
 
 A new Flutter project.
-
+#####
+Need Flutter version -  3.24.1
+######
 ## Getting Started
 
 This project is a starting point for a Flutter application.
