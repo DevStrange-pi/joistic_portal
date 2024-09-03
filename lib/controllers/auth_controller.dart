@@ -11,6 +11,7 @@ class AuthController extends GetxController {
   final StorageService _storageService = StorageService();
 
   Rx<User?> firebaseUser = Rx<User?>(null);
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -29,8 +30,10 @@ class AuthController extends GetxController {
   }
 
   Future<void> signInWithGoogle() async {
+    isLoading.value = true;
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      isLoading.value = false;
       if (googleUser == null) {
         Get.snackbar('Error', 'Google sign in aborted');
         return;
@@ -44,8 +47,11 @@ class AuthController extends GetxController {
       );
 
       await _auth.signInWithCredential(credential);
+      isLoading.value = false;
+      Get.snackbar("Successful!", "Logged in");
     } catch (e) {
       print("Exception : $e");
+      isLoading.value = false;
       Get.snackbar('Error', 'Failed to sign in with Google');
     }
   }

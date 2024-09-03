@@ -5,7 +5,6 @@ class StorageService {
   static const String _userKey = 'user';
   static const String _appliedCompaniesKey = 'applied_companies';
 
-  static final GlobalKey<ScaffoldState> scaffoldRiKey1 = GlobalKey<ScaffoldState>();
   static const tooltipRiKey2 = Key('__RIKEY2__');
   static const riKey3 = Key('__RIKEY3__');
 

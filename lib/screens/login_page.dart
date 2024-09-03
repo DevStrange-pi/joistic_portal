@@ -8,24 +8,80 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Center(
-        child: ElevatedButton.icon(
-          icon: Icon(Icons.login),
-          label: Text('Sign In With Google'),
-          onPressed: () {
-            _authController.signInWithGoogle();
-          },
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.black,
-            backgroundColor: Colors.white,
-            minimumSize: Size(200, 50),
-            side: BorderSide(color: Colors.grey),
+    return Obx(
+      () => Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+              stops: [0.0, 1],
+              colors: [Colors.white, Color.fromARGB(255, 143, 138, 138)],
+            )),
+            child: Scaffold(
+              // appBar: AppBar(
+              //   title: const Text('Login'),
+              // ),
+              backgroundColor: Colors.transparent,
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text(
+                      "Login",
+                      style: TextStyle(letterSpacing: 1.5, fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    ElevatedButton(
+                      style: const ButtonStyle(
+                          padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 14, vertical: 12))),
+                      onPressed: () {
+                        _authController.signInWithGoogle();
+                      },
+                      // style: ElevatedButton.styleFrom(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      //   foregroundColor: Colors.black,
+                      //   backgroundColor: Colors.white,
+                      //   side: const BorderSide(color: Colors.grey),
+                      // ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Image.asset(
+                              "assets/google.png",
+                              height: 30,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          const Text(
+                            "Sign in with Google",
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+          if (_authController.isLoading.value)
+            const Opacity(
+              opacity: 0.8,
+              child: ModalBarrier(dismissible: false, color: Colors.black),
+            ),
+          if (_authController.isLoading.value)
+            Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+        ],
       ),
     );
   }

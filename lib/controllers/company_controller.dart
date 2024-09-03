@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import '../models/company.dart';
 import '../services/api_service.dart';
 import '../services/storage_service.dart';
+import 'auth_controller.dart';
 
 class CompanyController extends GetxController {
   final ApiService _apiService = ApiService();
   final StorageService _storageService = StorageService();
-  
+
   var companies = <Company>[].obs;
   var isLoading = true.obs;
   var isSearchToggled = false.obs;
@@ -49,6 +50,15 @@ class CompanyController extends GetxController {
     } else {
       Get.back();
     }
+  }
+
+  void userSignOut() {
+    isLoading(true);
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.find<AuthController>().signOut();
+      isLoading(false);
+      Get.snackbar("Successful!", "Logged out");
+    });
   }
 
   bool get popDisableEnableLogic {
